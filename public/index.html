@@ -12,64 +12,61 @@
 </head>
 
 <body>
-    <nav class="ui menu">
+    <nav class="ui fixed menu">
         <div class="left menu">
             <div class="header siteheader item">
-                    <a href= "index.html">Rate My Choice</a>
+                    <a href= "/">Rate My Choice</a>
             </div>
         </div>
-
         <div class="ui container">
             <div class="item">
                 <div class="ui left icon a">
                     <i class="comments icon"></i>
-                    <a href= "faq.html">FAQ</a>
+                    <a href= "/">FAQ</a>
                 </div>
             </div>
-
             <div class="item">
                 <div class="ui left icon a">
                     <i class="settings icon"></i>
-                    <a href= "support.html">Support</a>
+                    <a href= "#">Support</a>
                 </div>
             </div>
-
             <div class="right right_menu1 menu">
                 <div class="active item">
-                    <div class="ui buttons">
-                        <div class="ui signup blue button">
-                            <div class="ui left icon a">
-                                <i class="add user icon"></i> Sign Up 
-                            </div>
-                        </div>
-                        <div class="or"></div>
-                        <div class="ui login green button">
-                            <div class="ui left icon a">
-                                <i class="sign in icon"></i>
-                                Log In
-                            </div>
-                        </div>
+                <div class="ui buttons">
+                    <div class="ui signup blue button">
+                    <div class="ui left icon a">
+                        <i class="add user icon"></i>
+                        Sign Up
                     </div>
+                    </div>
+                    <div class="or"></div>
+                    <div class="ui login green button">
+                    <div class="ui left icon a">
+                        <i class="sign in icon"></i>
+                        Log In
+                    </div>
+                    </div>
+                </div>
                 </div>
             </div>
             <div class="right right_menu2 menu">
                 <div class="active item">
                 	<div class="ui left labeled button" tabindex="0">
-                        <a class="ui basic right pointing label">
-					    </a>
-                        <div class="ui red logout button">
-                            <i class="log out icon"></i>
-                            Log Out
-                        </div>
+					  <a class="ui basic right pointing label">
+					  </a>
+					  <div class="ui red logout button">
+					    <i class="log out icon"></i>Log Out
+					  </div>
 					  <span class="userId"></span>
 					</div>
                 </div>
             </div>
         </div>
     </nav>
+    <!-- oatd code -->
 
-
-    <div class="main">
+    <div class="main" id="movieCard2">
         <div class="ui middle aligned center aligned grid">
             <div class="column">
                 <div class="ui gray inverted fixed header segment">                 
@@ -78,24 +75,21 @@
                 <div class="ui gray tertiary login_seg segment">
                 	<h3 class="ui header">To add movies/TV shows to your profile, click here</h3>
                 	<div class ="ui blue addmovie_button button">Add Movies/TV Shows</div>
-                </div>
-                <div class="ui gray tertiary main_seg segment">
-                    <h2 class="ui header">Let's get started!</h2>
-                    <div class="main_window">
-                        <div class="field">
-                            <div class="ui blue massive button">
-                                <i class="arrow circle right icon"></i>
-                            </div>
+                    <div class="ui inverted blue list_seg segment">
+                        <div class="ui relaxed divided list">
+                            
                         </div>
-                        <div class="field">
-                                <h2 class="ui header">Want to know what people think?</h2>
-                                <div class="ui blue large button">
-                                <i class="add user icon"></i>Sign up
-                            </div>
-                        </div>     
                     </div>
                     
                 </div>
+                <div class="ui gray tertiary main_seg segment">
+                   
+                    <h2 class="ui header">Let's get started!</h2>
+                    <div class="main_window">
+                       <div id="movieCard">
+                        <p>TEST</p>
+                    </div>
+                </div> <!--end of class main_window-->
                 <div class="ui signup_modal small modal">
                     <div class="ui gray tertiary form_seg segment">
                     <h2 class="ui header">First things first, let's sign up!</h2>
@@ -190,7 +184,7 @@
 	                    </form>
                 	</div>
                 </div>
-                <div class="ui gray inverted vertical footer segment">
+                <!--<div class="ui gray inverted vertical footer segment">
                     <div class="ui container">
                         <div class="ui inverted stackable grid">
                             <div class="left aligned eight wide column">
@@ -203,14 +197,16 @@
                                 <h4 class="ui inverted header">Site Map</h4>
                                 <div class="ui inverted link list">
                                     <a href="index.html" class="item">Home</a>
-                                    <a href="about.html" class="item">About us</a>
-                                    <a href="support.html" class="item">Support</a>
+                                    <a href="#" class="item">About us</a>
+                                    <a href="#" class="item">Privacy</a>
+                                    <a href="#" class="item">Support</a>
                                     <a href="faq.html" class="item">FAQ</a>
+                                    <a href="#" class="item">Careers</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>   
