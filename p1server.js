@@ -21,6 +21,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var mongoose = require('mongoose');
+var request = require('request');
 
 mongoose.connect('mongodb://localhost/Project1');
 mongoose.set('debug', true)
@@ -35,7 +36,10 @@ var movieSchema = new mongoose.Schema({
 	movieName: String,
 	mUserId: [String],
 	mUpVote: Number,
-	mDownVote: Number
+	mDownVote: Number,
+	mTitle: String,
+	mYear: String,
+	mPosterUrl: String
 });
 
 var UserDb = mongoose.model('user', userSchema); 
@@ -126,53 +130,73 @@ app.post('/addmovies', function(req, res){
 	console.log('inside addmovies post method');
 	var movieName = req.body.movieName;
 	var uName = req.body.userId;
+	var omdbResponse = {};
 	console.log(movieName);
 	console.log(req.body.userId);
-	MovieDb.findOne({movieName: req.body.movieName}).exec(function(err, movie){
-		if(!movie){
-			var m1 = new MovieDb({movieName: req.body.movieName, mUpVote: 0,mDownVote:0 });
-			m1.mUserId.push(uName);
-			m1.save(function(err, result) {
-				if(err){
-					console.log('error while adding movie');
-					res.json('error while adding movie');
-				}
-				else{
-					console.log('movie added successfully');
-					res.json('movie added successfully');
-				}
-			});
-		}
-		else{
-			console.log(movie.mUserId.length);
-			for(var i=0;i<movie.mUserId.length;i++){
-				if(movie.mUserId[i] === req.body.userId)
-				{
-					// console.log('movie already exists in user's list');
-					console.log(movie.mUserId[i]);
-					flagCounter++;
-				}
-				console.log(flagCounter);
-			}
-			if(flagCounter == 1){
-				res.json("movie already exists in your list");
-			}
-				else{
-					movie.mUserId.push(req.body.userId);
-					movie.save(function(err, result) {
+	movieParameterName = movieName.split(' ').join('+');
+	movieParameterString ="http://www.omdbapi.com/?t=" + movieParameterName + "&y=&plot=short&r=json&tomatoes=true";
+
+	request(movieParameterString, function(error, response, body){
+		if(!error && response.statusCode == 200) {
+			omdbResponse = JSON.parse(body);
+			MovieDb.findOne({movieName: req.body.movieName}).exec(function(err, movie){
+				if(!movie){
+					var m1 = new MovieDb({
+											movieName: req.body.movieName, 
+											mUpVote: 0,
+											mDownVote: 0,
+											mTitle: omdbResponse.Title,
+											mYear: omdbResponse.Year,
+											mPosterUrl: omdbResponse.Poster 
+										});
+					m1.mUserId.push(uName);
+					m1.save(function(err, result) {
 						if(err){
-							console.log('error while adding movie');
-							res.json('error while adding movie');
+							console.log('error while adding movie To DB');
+							res.json('error while adding movie to db');
 						}
 						else{
-							console.log('movie added to your list successfully');
-							res.json('movie added to your list successfully');
+							console.log('movie added successfully');
+							res.json(body);
 						}
 					});
 				}
-			
+				else{
+					console.log(movie.mUserId.length);
+					for(var i=0;i<movie.mUserId.length;i++){
+						if(movie.mUserId[i] === req.body.userId)
+						{
+							// console.log('movie already exists in user's list');
+							console.log(movie.mUserId[i]);
+							flagCounter++;
+						}
+						console.log(flagCounter);
+					}
+					if(flagCounter == 1){
+						res.json("movie already exists in your list");
+					}
+					else{
+						movie.mUserId.push(req.body.userId);
+						movie.save(function(err, result) {
+							if(err){
+								console.log('error while adding movie');
+								res.json('error while adding movie');
+							}
+							else{
+								console.log('movie added to your list successfully');
+								res.json('movie added to your list successfully');
+							}
+						});
+					}
+					
+				}
+			});
+		}//endif
+		else{
+			console.log('Movie not found in OMDB');
+			res.json('Movie not found in OMDB');
 		}
-		});
+	});
 });
 
 // app.get('/hi', function(req,res) {
